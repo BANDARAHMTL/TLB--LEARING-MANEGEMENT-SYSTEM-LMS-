@@ -1,6 +1,7 @@
 {
   "name": "lms-backend",
   "version": "1.0.0",
+  "type": "module",
   "description": "TLB LMS Backend - MERN Stack",
   "main": "index.js",
   "scripts": {

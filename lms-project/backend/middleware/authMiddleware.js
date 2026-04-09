@@ -21,20 +21,42 @@ export const protect = asyncHandler(async (req, res, next) => {
   }
 });
 
-export const admin = (req, res, next) => {
+// @desc    Protect route for admin only
+export const admin = asyncHandler(async (req, res, next) => {
   if (req.user && req.user.role === 'admin') {
     next();
   } else {
     res.status(403);
-    throw new Error('Not authorized as admin');
+    throw new Error('Not authorized as admin. Admin access required.');
   }
-};
+});
 
-export const instructor = (req, res, next) => {
+// @desc    Protect route for instructor/teacher (and admin)
+export const instructor = asyncHandler(async (req, res, next) => {
   if (req.user && (req.user.role === 'instructor' || req.user.role === 'admin')) {
     next();
   } else {
     res.status(403);
-    throw new Error('Not authorized as instructor');
+    throw new Error('Not authorized as instructor. Instructor or Admin access required.');
   }
-};
+});
+
+// @desc    Protect route for student
+export const student = asyncHandler(async (req, res, next) => {
+  if (req.user && req.user.role === 'student') {
+    next();
+  } else {
+    res.status(403);
+    throw new Error('Not authorized as student. Student access required.');
+  }
+});
+
+// @desc    Protect route for student or instructor or admin
+export const studentOrInstructor = asyncHandler(async (req, res, next) => {
+  if (req.user && (req.user.role === 'student' || req.user.role === 'instructor' || req.user.role === 'admin')) {
+    next();
+  } else {
+    res.status(403);
+    throw new Error('Not authorized. Access denied.');
+  }
+});

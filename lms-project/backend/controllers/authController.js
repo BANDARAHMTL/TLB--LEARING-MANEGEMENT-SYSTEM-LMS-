@@ -6,7 +6,7 @@ import User from '../models/User.js';
 const generateToken = (id) =>
   jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' });
 
-// @desc    Register new user
+// @desc    Register new student
 // @route   POST /api/auth/register
 export const register = asyncHandler(async (req, res) => {
   const { name, email, phone, password } = req.body;
@@ -15,7 +15,54 @@ export const register = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error('User already exists');
   }
-  const user = await User.create({ name, email, phone, password });
+  const user = await User.create({ name, email, phone, password, role: 'student' });
+  res.status(201).json({
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    role: user.role,
+    avatar: user.avatar,
+    token: generateToken(user._id),
+  });
+});
+
+// @desc    Register teacher/instructor
+// @route   POST /api/auth/register-teacher
+export const registerTeacher = asyncHandler(async (req, res) => {
+  const { name, email, phone, password } = req.body;
+  const userExists = await User.findOne({ email });
+  if (userExists) {
+    res.status(400);
+    throw new Error('User already exists');
+  }
+  const user = await User.create({ name, email, phone, password, role: 'instructor' });
+  res.status(201).json({
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    role: user.role,
+    avatar: user.avatar,
+    token: generateToken(user._id),
+  });
+});
+
+// @desc    Register admin (requires admin secret)
+// @route   POST /api/auth/register-admin
+export const registerAdmin = asyncHandler(async (req, res) => {
+  const { name, email, phone, password, adminSecret } = req.body;
+
+  if (adminSecret !== process.env.ADMIN_SECRET) {
+    res.status(401);
+    throw new Error('Invalid admin secret key');
+  }
+
+  const userExists = await User.findOne({ email });
+  if (userExists) {
+    res.status(400);
+    throw new Error('User already exists');
+  }
+
+  const user = await User.create({ name, email, phone, password, role: 'admin', isVerified: true });
   res.status(201).json({
     _id: user._id,
     name: user.name,
@@ -88,6 +135,7 @@ export const resetPassword = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error('Invalid or expired token');
   }
+  
   user.password = req.body.password;
   user.resetPasswordToken = undefined;
   user.resetPasswordExpire = undefined;
