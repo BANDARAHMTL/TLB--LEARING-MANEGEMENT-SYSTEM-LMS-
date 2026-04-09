@@ -1,4 +1,4 @@
-# OETI LMS — MERN Stack
+# TLB LMS — MERN Stack
 
 > A full-featured Learning Management System built with MongoDB, Express, React, and Node.js.
 
@@ -166,7 +166,7 @@ Frontend runs at: `http://localhost:5173`
 - ✅ Notification system
 - ✅ Wallet system
 - ✅ Mobile responsive design
-- ✅ OETI dark blue/purple theme
+- ✅ TLB dark blue/purple theme
 
 ---
 

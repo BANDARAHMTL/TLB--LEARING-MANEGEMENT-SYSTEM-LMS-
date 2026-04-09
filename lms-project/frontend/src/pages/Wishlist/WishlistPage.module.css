@@ -1,0 +1,114 @@
+.page { padding: 48px 0 80px; background: var(--bg-dark); min-height: calc(100vh - 68px); }
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-light);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.header h1 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.8rem;
+}
+
+.header h1 svg { color: var(--secondary); }
+.header p { color: var(--text-muted); font-size: 0.9rem; }
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 100px 20px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.emptyIcon { font-size: 4rem; }
+.empty h2 { font-size: 1.8rem; color: var(--text-primary); }
+.empty p { font-size: 1rem; margin-bottom: 8px; }
+
+.grid { display: flex; flex-direction: column; gap: 16px; }
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: var(--gradient-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  transition: border-color 0.2s;
+}
+
+.card:hover { border-color: rgba(108,77,230,0.35); }
+
+.thumb {
+  width: 120px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  flex-shrink: 0;
+}
+
+.info { flex: 1; min-width: 0; }
+
+.title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.2s;
+}
+
+.title:hover { color: var(--primary-light); }
+
+.instructor { font-size: 0.83rem; color: var(--text-muted); margin-bottom: 8px; }
+
+.price {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--primary-light);
+  font-size: 1rem;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.removeBtn {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: none;
+  color: var(--text-muted);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.95rem;
+}
+
+.removeBtn:hover {
+  border-color: var(--error);
+  color: var(--error);
+  background: rgba(239,68,68,0.1);
+}
+
+@media (max-width: 600px) {
+  .card { flex-wrap: wrap; }
+  .thumb { width: 100%; height: 160px; }
+  .actions { width: 100%; justify-content: flex-end; }
+}
