@@ -1,0 +1,14 @@
+import express from 'express';
+import { createQuiz, getCourseQuizzes, getQuizById, updateQuiz, deleteQuiz, submitQuiz, getMyAttempts, getQuizResults } from '../controllers/combinedController.js';
+import { protect, teacher } from '../middleware/authMiddleware.js';
+const r = express.Router();
+r.use(protect);
+r.post('/', teacher, createQuiz);
+r.get('/course/:courseId', getCourseQuizzes);
+r.get('/:id', getQuizById);
+r.put('/:id', teacher, updateQuiz);
+r.delete('/:id', teacher, deleteQuiz);
+r.post('/submit', submitQuiz);
+r.get('/:quizId/my-attempts', getMyAttempts);
+r.get('/:quizId/results', teacher, getQuizResults);
+export default r;

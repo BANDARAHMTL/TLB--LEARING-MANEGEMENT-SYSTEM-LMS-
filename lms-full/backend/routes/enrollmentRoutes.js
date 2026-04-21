@@ -1,0 +1,11 @@
+import express from 'express';
+import { enrollCourse, getMyEnrollments, getAllEnrollments, updateProgress, unenroll } from '../controllers/combinedController.js';
+import { protect, admin, teacher } from '../middleware/authMiddleware.js';
+const r = express.Router();
+r.use(protect);
+r.post('/', enrollCourse);
+r.get('/my', getMyEnrollments);
+r.get('/all', teacher, getAllEnrollments);
+r.put('/progress', updateProgress);
+r.delete('/:courseId', unenroll);
+export default r;

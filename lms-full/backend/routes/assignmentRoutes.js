@@ -1,0 +1,15 @@
+import express from 'express';
+import { createAssignment, getCourseAssignments, getAssignmentById, updateAssignment, deleteAssignment, submitAssignment, getSubmissions, gradeSubmission } from '../controllers/combinedController.js';
+import { protect, teacher } from '../middleware/authMiddleware.js';
+import { upload } from '../config/upload.js';
+const r = express.Router();
+r.use(protect);
+r.post('/', teacher, createAssignment);
+r.get('/course/:courseId', getCourseAssignments);
+r.get('/:id', getAssignmentById);
+r.put('/:id', teacher, updateAssignment);
+r.delete('/:id', teacher, deleteAssignment);
+r.post('/:assignmentId/submit', upload.array('files', 5), submitAssignment);
+r.get('/:assignmentId/submissions', teacher, getSubmissions);
+r.put('/submissions/:submissionId/grade', teacher, gradeSubmission);
+export default r;
